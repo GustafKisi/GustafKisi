@@ -1,5 +1,11 @@
 ### Hi there 👋
 
+<div align="center">
+<img src="https://raw.githubusercontent.com/GustafKisi/GustafKisi/animation/github-contribution-grid-snake-dark.svg#gh-dark-mode-only"/>
+<img src="https://raw.githubusercontent.com/GustafKisi/GustafKisi/animation/github-contribution-grid-snake.svg#gh-light-mode-only"/>
+</div>
+
+
 <!--
 **GustafKisi/GustafKisi** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
