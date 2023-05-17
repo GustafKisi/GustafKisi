@@ -1,8 +1,7 @@
 ### Hi there 👋
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/GustafKisi/GustafKisi/animation/github-contribution-grid-snake-dark.svg#gh-dark-mode-only"/>
-<img src="https://raw.githubusercontent.com/GustafKisi/GustafKisi/animation/github-contribution-grid-snake.svg#gh-light-mode-only"/>
+<img src="https://raw.githubusercontent.com/GustafKisi/GustafKisi/animation/github-contribution-grid-snake.svg"/>
 </div>
 
 
