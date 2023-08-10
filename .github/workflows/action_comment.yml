@@ -3,26 +3,27 @@ on:
     types: [created, deleted]
 
 jobs:
-  pr_commented:
-    # This job only runs for pull request comments
-    name: PR comment
-    if: ${{ github.event.issue.pull_request }}
+  blessing_from_the_knug:
+    # This job only runs in 1/1000 chance
     runs-on: ubuntu-latest
     steps:
-      - uses: GustafKisi/action_knugen@1.1
-        with:
-          message: "Knug."
-          token: ${{secrets.GITHUB_TOKEN}}
+    - id: roll-dice
+      run: echo "$(($RANDOM % 1000))" >> $GITHUB_ENV
+      shell: bash
+      
+    - id: debug
+      run: echo "$GITHUB_ENV"
 
-  issue_commented:
-    # This job only runs for issue comments
-    name: Issue comment
-    if: ${{ !github.event.issue.pull_request }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: GustafKisi/action_knugen@1.1
-        with:
-          message: "Knug."
-          token: ${{secrets.GITHUB_TOKEN}}
+    - if: env.PROCEED != '0'
+      name: Cancelling
+      uses: andymckay/cancel-action@0.2
+
+    - if: env.PROCEED != '0'
+      name: Waiting for cancellation
+      run: sleep 60
+    
+    - uses: GustafKisi/action_knugen@1.1
+      with:
+        message: "Wishing you fruitful outcomes in your efforts."
+        token: ${{secrets.GITHUB_TOKEN}}
             
-          
