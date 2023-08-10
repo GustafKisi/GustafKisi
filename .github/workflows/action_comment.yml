@@ -1,7 +1,7 @@
 on:
   issue_comment:
     types: [created, deleted]
-
+  workflow_dispatch:
 jobs:
   blessing_from_the_knug:
     # This job only runs in 1/1000 chance
