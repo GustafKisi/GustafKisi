@@ -69,7 +69,9 @@ jobs:
           new_issue_url=$(gh issue create \
             --assignee "$ASSIGNEES" \
             --project "$PROJECT" \
-            --template "$TEMPLATE")
+            --template "$TEMPLATE" \
+            --title "test" \
+            --body "test")
           if [[ $PINNED == true ]]; then
             gh issue pin "$new_issue_url"
           fi
