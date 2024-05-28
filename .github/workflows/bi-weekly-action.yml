@@ -50,8 +50,49 @@ jobs:
       CLOSE_PREVIOUS: false
       PINNED: true
       ASSIGNEES: GustafKisi
-      LABELS: Sprint Goals
+      LABELS: ""
+      TITLE: Sprint Planning
       TEMPLATE: sprint.md
+      BODY: | # can't use --template non interactively yet -> https://github.com/cli/cli/issues/7405
+            # Sprint Planning
+
+            > [How we do sprints](../../docs/protocols/how_we_do_sprints.md)
+
+            ## Agenda
+
+            | Release Candidate | Team Lead   | QA Member | Release Lead |
+            | ----------------- | ----------- | --------- | ------------ |
+            | 60.0              | @GustafKisi | @Pawel    | @            |
+
+            Please copy the template below, make a comment, and fill in your plan for this sprint.
+
+            > P.S. Don't forget to self-reflect at the end of the sprint!
+
+            ## Template
+
+            Please copy the section below and fill in your plan for this sprint. Please remember to fill in your self-reflection at the end of the sprint.
+
+            ```md
+            ## Your Name
+
+            <!--- Main priorities -->
+
+            - [ ]
+
+            ### Optional
+
+            <!--- Optional tasks -->
+
+            - [ ]
+
+            ### Extra
+
+            <!--- Extra tasks that pop up during the sprint -->
+
+            ### Self-Reflections
+
+            <!--- Self reflections to write at the end of the sprint! -->
+            ```
       # PROJECT: 67 # kisi-hardware - Sprints
     steps:
       - name: Create sprint planning issue
@@ -67,11 +108,9 @@ jobs:
             fi
           fi
           new_issue_url=$(gh issue create \
+            --title "$TITLE" \
             --assignee "$ASSIGNEES" \
-            --project "$PROJECT" \
-            --template "$TEMPLATE" \
-            --title "test" \
-            --body "test")
+            --body "$BODY" )
           if [[ $PINNED == true ]]; then
             gh issue pin "$new_issue_url"
           fi
