@@ -47,7 +47,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GH_REPO: ${{ github.repository }}
-      CLOSE_PREVIOUS: true
+      CLOSE_PREVIOUS: false
       PINNED: true
       ASSIGNEES: GustafKisi
       LABELS: Sprint Goals
@@ -69,8 +69,7 @@ jobs:
           new_issue_url=$(gh issue create \
             --title "$TITLE" \
             --assignee "$ASSIGNEES" \
-            --label "$LABELS" \
-            --project "$PROJECT"\
+            --project "$PROJECT" \
             --template "$TEMPLATE")
           if [[ $PINNED == true ]]; then
             gh issue pin "$new_issue_url"
