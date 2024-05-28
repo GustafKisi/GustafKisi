@@ -41,7 +41,6 @@ jobs:
     if: ${{ needs.weekindex.outputs.weekindex == 0 }}
     runs-on: ubuntu-latest
     permissions:
-      repository-projects: write
       issues: write
     needs:
       - weekindex
@@ -50,14 +49,14 @@ jobs:
       GH_REPO: ${{ github.repository }}
       CLOSE_PREVIOUS: true
       PINNED: true
+      USE_TEMPLATE: false # can't use --template non interactively yet -> https://github.com/cli/cli/issues/7405
+      ADD_TO_PROJECT: false # TODO, only works with classic projects so far and not V2. Needs permission.
+      PROJECT_OWNER: GustafKisi
+      PROJECT_NR: 2 # https://github.com/orgs/kisi-inc/projects/67
       ASSIGNEES: GustafKisi
       LABELS: ""
       TITLE: Sprint Planning
       TEMPLATE: sprint.md
-      USE_TEMPLATE: false # can't use --template non interactively yet -> https://github.com/cli/cli/issues/7405
-      ADD_TO_PROJECT: true
-      PROJECT_OWNER: GustafKisi
-      PROJECT_NR: 2 # https://github.com/orgs/kisi-inc/projects/67
       BODY: |
             # Sprint Planning
 
