@@ -53,7 +53,11 @@ jobs:
       LABELS: ""
       TITLE: Sprint Planning
       TEMPLATE: sprint.md
-      BODY: | # can't use --template non interactively yet -> https://github.com/cli/cli/issues/7405
+      USE_TEMPLATE: false # can't use --template non interactively yet -> https://github.com/cli/cli/issues/7405
+      ADD_TO_PROJECT: true
+      PROJECT_OWNER: GustafKisi
+      PROJECT_NR: 2 # https://github.com/orgs/kisi-inc/projects/67
+      BODY: |
             # Sprint Planning
 
             > [How we do sprints](../../docs/protocols/how_we_do_sprints.md)
@@ -93,11 +97,10 @@ jobs:
 
             <!--- Self reflections to write at the end of the sprint! -->
             ```
-      # PROJECT: 67 # kisi-hardware - Sprints
     steps:
       - name: Create sprint planning issue
         run: |
-          if [[ $CLOSE_PREVIOUS == true ]]; then
+         if [[ $CLOSE_PREVIOUS == true ]]; then
             previous_issue_number=$(gh issue list \
               --label "$LABELS" \
               --json number \
@@ -107,10 +110,21 @@ jobs:
               gh issue unpin "$previous_issue_number"
             fi
           fi
-          new_issue_url=$(gh issue create \
-            --title "$TITLE" \
+          if [[ $USE_TEMPLATE == true ]]; then
+            new_issue_url=$(gh issue create \
             --assignee "$ASSIGNEES" \
-            --body "$BODY" )
+            --label "$LABELS" \
+            --template "$TEMPLATE")
+          else
+            new_issue_url=$(gh issue create \
+              --title "$TITLE" \
+              --assignee "$ASSIGNEES" \
+              --label "$LABELS" \
+              --body "$BODY" )
+          fi
           if [[ $PINNED == true ]]; then
             gh issue pin "$new_issue_url"
+          fi
+          if [[ $ADD_TO_PROJECT == true ]]; then
+            gh project item-add "$PROJECT_NR" --owner "$PROJECT_OWNER" --url "$new_issue_url"
           fi
