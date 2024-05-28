@@ -56,8 +56,6 @@ jobs:
     steps:
       - name: Create sprint planning issue
         run: |
-          gh issue create --title "Sprint Planning" --template sprint.md
-
           if [[ $CLOSE_PREVIOUS == true ]]; then
             previous_issue_number=$(gh issue list \
               --label "$LABELS" \
