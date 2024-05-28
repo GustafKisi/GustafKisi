@@ -67,7 +67,6 @@ jobs:
             fi
           fi
           new_issue_url=$(gh issue create \
-            --title "$TITLE" \
             --assignee "$ASSIGNEES" \
             --project "$PROJECT" \
             --template "$TEMPLATE")
