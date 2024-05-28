@@ -41,7 +41,8 @@ jobs:
     if: ${{ needs.weekindex.outputs.weekindex == 0 }}
     runs-on: ubuntu-latest
     permissions:
-      issues: write # we can add project permissions too to add this ticket automatically to the sprint.
+      repository-projects: write
+      issues: write
     needs:
       - weekindex
     env:
