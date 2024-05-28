@@ -1,5 +1,5 @@
-name: bi-weekly-action
-run-name: bi-weekly-action
+name: Create Sprint Planning Ticket
+
 on:
   schedule:
     # At 04:00 on Monday
