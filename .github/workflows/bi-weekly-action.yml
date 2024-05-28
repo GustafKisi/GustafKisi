@@ -10,7 +10,7 @@ env:
   # 12/11 is Monday, so the cron is set to run on Monday.
   # Every second week of the bi-weekly cycle, the action is going to be skipped.
   # The cron time can be set to any time of the day.
-  FIRST_RUN_DATE: "2024-05-21"
+  FIRST_RUN_DATE: "2024-05-13"
 jobs:
   weekindex:
     runs-on: ubuntu-latest
@@ -36,10 +36,44 @@ jobs:
             echo "🔴 It's the second week of the bi-weekly cycle. The action is going to be skipped." >> $GITHUB_STEP_SUMMARY
           fi
   # Replace with your real job name and steps
-  action:
-    if: ${{ needs.weekindex.outputs.weekindex == 0 }}  
+  create-issue:
+    name: Create sprint planning issue
+    if: ${{ needs.weekindex.outputs.weekindex == 0 }}
     runs-on: ubuntu-latest
+    permissions:
+      issues: write # we can add project permissions too to add this ticket automatically to the sprint.
     needs:
       - weekindex
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      CLOSE_PREVIOUS: true
+      PINNED: true
+      ASSIGNEES: GustafKisi
+      LABELS: Sprint Goals
+      TEMPLATE: sprint.md
+      # PROJECT: 67 # kisi-hardware - Sprints
     steps:
-      - run: echo "🟢 The bi-weekly action is running!"
+      - name: Create sprint planning issue
+        run: |
+          gh issue create --title "Sprint Planning" --template sprint.md
+
+          if [[ $CLOSE_PREVIOUS == true ]]; then
+            previous_issue_number=$(gh issue list \
+              --label "$LABELS" \
+              --json number \
+              --jq '.[0].number')
+            if [[ -n $previous_issue_number ]]; then
+              gh issue close "$previous_issue_number"
+              gh issue unpin "$previous_issue_number"
+            fi
+          fi
+          new_issue_url=$(gh issue create \
+            --title "$TITLE" \
+            --assignee "$ASSIGNEES" \
+            --label "$LABELS" \
+            --project "$PROJECT"\
+            --template "$TEMPLATE")
+          if [[ $PINNED == true ]]; then
+            gh issue pin "$new_issue_url"
+          fi
