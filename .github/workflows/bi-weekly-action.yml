@@ -10,7 +10,7 @@ env:
   # 12/11 is Monday, so the cron is set to run on Monday.
   # Every second week of the bi-weekly cycle, the action is going to be skipped.
   # The cron time can be set to any time of the day.
-  FIRST_RUN_DATE: "2024-05-14"
+  FIRST_RUN_DATE: "2024-05-21"
 jobs:
   weekindex:
     runs-on: ubuntu-latest
